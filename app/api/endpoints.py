@@ -7,7 +7,7 @@ router = APIRouter()
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 @router.post("/calculate_bonus")
 async def calculate_bonus(request: Request):
@@ -34,6 +34,7 @@ async def calculate_bonus(request: Request):
             vip_bonus = total_bonus * config.config['VIP_BONUS']
             applied_rules.append({'rule': 'holiday_bonus', 'bonus': vip_bonus})
 
+        log.info(' [x] Successfull: calculate_bonus')
         return responses.JSONResponse({'total_bonus': total_bonus, 'applied_rules': applied_rules})
 
     except KeyError as e:
